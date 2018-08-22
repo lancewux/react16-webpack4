@@ -1,0 +1,31 @@
+{
+  "name": "react16-webpack4",
+  "version": "1.0.0",
+  "description": "introduction\r -",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/server/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lancewux/react16-webpack4.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lancewux/react16-webpack4/issues"
+  },
+  "homepage": "https://github.com/lancewux/react16-webpack4#readme",
+  "dependencies": {
+    "chalk": "^2.4.1",
+    "koa": "^2.5.2",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
+  },
+  "devDependencies": {
+    "webpack": "^4.16.5"
+  }
+}
