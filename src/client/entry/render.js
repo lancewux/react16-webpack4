@@ -1,5 +1,6 @@
 
 import * as React from 'react';
+import ReactDOM from 'react-dom';
 
 async function clientRender(PageDom) {
     const mountDom = window.document.querySelector('#react-root');

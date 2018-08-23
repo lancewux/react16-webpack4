@@ -1,6 +1,7 @@
 'use strict';
 
 const path = require('path');
+const webpack = require('webpack');
 
 const AssetsPlugin = require('assets-webpack-plugin');
 
@@ -8,6 +9,7 @@ const MAX_AGE = 2592000;
 
 
 module.exports = {
+  mode: 'none',
   // devtool: 'cheap-module-source-map',
   context: path.resolve(__dirname, '../'),
 
@@ -16,9 +18,9 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, '../static/dist'),
-    filename: 'js/[name].[chunkhash:12].js',
+    filename: '[name].[chunkhash:12].js',
     // There are also additional JS chunk files if you use code splitting.
-    chunkFilename: `js/[name].[id].[chunkhash:12].js?max_age=${MAX_AGE}`,
+    chunkFilename: `[name].[id].[chunkhash:12].js?max_age=${MAX_AGE}`,
     // This is the URL that app is served from. We use "/" in development.
     publicPath: '/dist/',
   },
@@ -30,7 +32,7 @@ module.exports = {
     ],
     extensions: ['.js', '.jsx'],
     alias: {
-      
+
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
@@ -39,21 +41,22 @@ module.exports = {
   },
   module: {
     rules: [
-      // {
-      //   test: /\.(js|jsx)$/,
-      //   enforce: 'pre',
-      //   use: [
-      //     {
-      //       options: {
-      //         formatter: eslintFormatter,
-      //         eslintPath: require.resolve('eslint'),
-              
-      //       },
-      //       loader: require.resolve('eslint-loader'),
-      //     },
-      //   ],
-      //   include: paths.appSrc,
-      // },
+      /*
+      {
+        test: /\.(js|jsx)$/,
+        enforce: 'pre',
+        use: [
+          {
+            options: {
+              formatter: eslintFormatter,
+              eslintPath: require.resolve('eslint'),
+
+            },
+            loader: require.resolve('eslint-loader'),
+          },
+        ],
+        include: paths.appSrc,
+      },*/
       {
         oneOf: [
           {
@@ -76,6 +79,7 @@ module.exports = {
                 "env",
                 "react"
               ],
+              plugins: ['transform-runtime'],
               cacheDirectory: true,
             },
           },
@@ -125,25 +129,15 @@ module.exports = {
     ],
   },
   plugins: [
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('../tmpDist/react-manifest.json'),
+    }),
+    new webpack.NamedModulesPlugin(),
     new AssetsPlugin({
       path: path.join(__dirname, '../tmpDist'),
-        filename: 'assets.json',
-        update: true,
+      filename: 'assets.json',
+      update: true,
     })
   ],
-  // Some libraries import Node modules but don't use them in the browser.
-  // Tell Webpack to provide empty mocks for them so importing them works.
-  // node: {
-  //   dgram: 'empty',
-  //   fs: 'empty',
-  //   net: 'empty',
-  //   tls: 'empty',
-  //   child_process: 'empty',
-  // },
-  // Turn off performance hints during development because we don't do any
-  // splitting or minification in interest of speed. These warnings become
-  // cumbersome.
-  // performance: {
-  //   hints: false,
-  // },
 };

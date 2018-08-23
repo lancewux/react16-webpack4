@@ -1,9 +1,21 @@
 const Koa = require('koa');
 const chalk = require('chalk');
 const router = require('./router');
+const views = require('koa-views');
+const koaStatic = require('koa-static');
 
 
 const app = new Koa();
+
+app.use(koaStatic('static', {
+  maxage: 1000 * 3600 * 24 * 30, // a month
+}));
+
+app.use(views(__dirname + './../../static/template', {
+  map: {
+    pug: 'pug'
+  }
+}));
 
 app.use(router.routes());
 
