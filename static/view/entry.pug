@@ -1,0 +1,28 @@
+extends layout.pug
+
+block preStyles
+  title #{title || 'QQ浏览器'}
+//-   if !purifiedCSS
+//-     link(rel="stylesheet" href=entry.css)
+//-   else
+//-     noscript
+//-       link(rel="stylesheet" href=entry.css)
+//-     link(rel="preload" as="style" onload="this.rel='stylesheet'" href=entry.css )
+//-     style.
+//-       !{purifiedCSS}
+
+block content
+  div#react-root !{reactString}
+
+  script.
+    // 异步加载脚本
+    var scripts = ['#{reactJs}', '#{entryJs}'];
+    //- var scripts = [];
+
+    scripts.forEach(function (src) {
+      var script = document.createElement('script');
+      script.src = src;
+      script.crossOrigin = "anonymous";
+      script.async = false;
+      document.head.appendChild(script);
+    });

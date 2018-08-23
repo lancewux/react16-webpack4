@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server/index.js",
+    "start-server": "node tmpDist/server.js",
     "build": "node script/build.js",
     "build:dll": "webpack --config config/webpack.config.dll.js",
     "build:test": "webpack --config config/webpack.config.base.js",
+    "build-server": "webpack --config config/webpack.server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -39,11 +41,13 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^1.0.0",
     "file-loader": "^2.0.0",
+    "ignore-loader": "^0.1.2",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "style-loader": "^0.22.1",
     "url-loader": "^1.1.1",
     "webpack": "^4.16.5",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "webpack-node-externals": "^1.7.2"
   }
 }
