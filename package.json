@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server/index.js",
+    "start-dev-server": "webpack-dev-server --open",
+    "start-dev-server1": "webpack-dev-server --config config/webpack.config.base.js",
     "start-server": "node tmpDist/server.js",
     "build": "node script/build.js",
     "build:dll": "webpack --config config/webpack.config.dll.js",
     "build:test": "webpack --config config/webpack.config.base.js",
     "build-server": "webpack --config config/webpack.server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run start & npm run build:test",
+    "watch": "concurrently --kill-others \"npm run start-dev-server1\" \"npm run start\" "
   },
   "repository": {
     "type": "git",
@@ -39,15 +42,19 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "concurrently": "^3.6.1",
     "css-loader": "^1.0.0",
     "file-loader": "^2.0.0",
     "ignore-loader": "^0.1.2",
+    "koa-webpack-dev-middleware": "^2.0.2",
     "postcss-flexbugs-fixes": "^4.1.0",
     "postcss-loader": "^3.0.0",
     "style-loader": "^0.22.1",
     "url-loader": "^1.1.1",
     "webpack": "^4.16.5",
     "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.5",
     "webpack-node-externals": "^1.7.2"
   }
 }

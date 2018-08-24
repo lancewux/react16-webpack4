@@ -7,22 +7,40 @@ const AssetsPlugin = require('assets-webpack-plugin');
 
 const MAX_AGE = 2592000;
 
+const wds = {
+  hostname: 'localhost',
+  port: 8080
+};
+const publicPath = `http://${wds.hostname}:${wds.port}/dist/`;
 
 module.exports = {
   mode: 'none',
   // devtool: 'cheap-module-source-map',
+  // devtool: 'inline-source-map',
+  devtool: 'inline-source-map',
+  devServer: {
+    publicPath,
+    hot: true,
+    // inline: false,
+    // lazy: false,
+    // quiet: true,
+    // noInfo: true,
+    headers: { 'Access-Control-Allow-Origin': '*' },
+    // stats: 'minimal',
+    host: wds.hostname
+  },
   context: path.resolve(__dirname, '../'),
 
   entry: {
-    home: './src/client/entry/home.js',
+    home: './src/client/entry/home/client',
   },
   output: {
     path: path.join(__dirname, '../static/dist'),
-    filename: '[name].[chunkhash:12].js',
+    filename: '[name].js', //'[name].[chunkhash:12].js'
     // There are also additional JS chunk files if you use code splitting.
-    chunkFilename: `[name].[id].[chunkhash:12].js?max_age=${MAX_AGE}`,
+    chunkFilename: `[name].[id].js`, //`[name].[id].[chunkhash:12].js?max_age=${MAX_AGE}`
     // This is the URL that app is served from. We use "/" in development.
-    publicPath: '/dist/',
+    publicPath: publicPath,
   },
   resolve: {
     modules: [
@@ -138,6 +156,7 @@ module.exports = {
       path: path.join(__dirname, '../tmpDist'),
       filename: 'assets.json',
       update: true,
-    })
+    }),
+    new webpack.HotModuleReplacementPlugin()
   ],
 };

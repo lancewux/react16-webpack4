@@ -1,0 +1,36 @@
+extends layout.pug
+
+//- block preStyles
+//-   title #{title || 'hello'}
+//-   if !purifiedCSS
+//-     link(rel="stylesheet" href=entry.css)
+//-   else
+//-     noscript
+//-       link(rel="stylesheet" href=entry.css)
+//-     link(rel="preload" as="style" onload="this.rel='stylesheet'" href=entry.css )
+//-     style.
+//-       !{purifiedCSS}
+
+block content
+  div#react-root !{reactString}
+
+block postScripts
+  //- if reactData
+  //-   script.
+  //-     window.__PREFETCHED_DATA__ = !{reactData};
+  //- if purifiedCSS
+  //-   script
+  //-     // 异步加载样式
+  //-     include ../../node_modules/fg-loadcss/src/loadCSS.js
+  //-     include ../../node_modules/fg-loadcss/src/cssrelpreload.js
+
+  script.
+    // 异步加载脚本
+    var scripts = ['#{reactJs}', '#{entryJs}'];
+    scripts.forEach(function (src) {
+      var script = document.createElement('script');
+      script.src = src;
+      script.crossOrigin = "anonymous";
+      script.async = false;
+      document.head.appendChild(script);
+    });

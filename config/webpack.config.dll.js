@@ -2,6 +2,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const outputPath = 'tmpDist';
 
@@ -26,6 +27,12 @@ module.exports = {
     library: '[name]_lib',
   },
   plugins: [
+    new CleanWebpackPlugin(
+      ['./static/dist/*'],
+      {
+        root: path.join(__dirname, '../')
+      }
+    ),
     new webpack.DllPlugin({
       context: __dirname,
       name: '[name]_lib',

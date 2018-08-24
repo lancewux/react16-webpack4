@@ -5,8 +5,16 @@ const views = require('koa-views');
 const koaStatic = require('koa-static');
 const path = require('path');
 
+// const webpack = require('webpack');
+// const webpackDevMiddleware = require('koa-webpack-dev-middleware');
+// const config = require('../../config/webpack.config.base.js');
+// const compiler = webpack(config);
 
 const app = new Koa();
+
+// app.use(webpackDevMiddleware(compiler, {
+//   publicPath: config.output.publicPath
+// }));
 
 app.use(koaStatic('static', {
   maxage: 1000 * 3600 * 24 * 30, // a month
