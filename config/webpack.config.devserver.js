@@ -13,8 +13,8 @@ const wds = {
   hostname: 'localhost',
   port: 8080
 };
-// const publicPath = `http://${wds.hostname}:${wds.port}/dist/`;
-const publicPath = `/dist/`;
+const publicPath = `http://${wds.hostname}:${wds.port}/dist/`;
+// const publicPath = `/dist/`;
 
 module.exports = {
   mode: 'none',
@@ -32,7 +32,7 @@ module.exports = {
     // headers: { 'Access-Control-Allow-Origin': '*' },
     // stats: 'minimal',
     // host: wds.hostname,
-    serverSideRender: true
+    // serverSideRender: true
   },
   context: path.resolve(__dirname, '../'),
 
@@ -163,6 +163,6 @@ module.exports = {
       filename: 'assets.json',
       update: true,
     }),
-    // new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin()
   ],
 };

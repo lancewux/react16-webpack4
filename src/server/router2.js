@@ -2,24 +2,18 @@
 const Router = require('koa-router');
 const router = new Router();
 const assets = require('./util/assets');
-const hotload = require('hotload');
+const hello = require('./hello');
 
-const hello = hotload('./hello', () => {
-    console.log('### hello hotload')
-}).hello;
-// require('./hello');
+// if (process.env.NODE_ENV == 'local') {
+//     require('babel-register')({
+//         extensions: [".jsx", ".js"],
+//         cache: false //热更新需要
+//     })
+// }
 
-
-if (process.env.NODE_ENV == 'local') {
-    require('babel-register')({
-        extensions: [".jsx", ".js"],
-        cache: false //热更新需要
-    })
-}
-
-const Home = require('../client/container/Home.jsx');
-const React = require('react');
-const ReactDOM = require('react-dom/server');
+// const Home = require('../client/container/Home.jsx');
+// const React = require('react');
+// const ReactDOM = require('react-dom/server');
 // console.log('### Home', Home);
 
 async function getS() {
@@ -33,12 +27,11 @@ router.get('/', async (ctx, next) => {
     const assetArr = assets();
     const entryJs = assetArr['home'] && assetArr['home']['js'];
     const reactJs = assetArr['react'] && assetArr['react']['js'];
-    const reactString = ReactDOM.renderToString(
-        React.createElement(Home.default || '')
-    );
-    // const assetsByChunkName = ctx.state.webpackStats && ctx.state.webpackStats.toJson();
-    // console.log('###assetsByChunkName', assetsByChunkName);
-    // const reactString = await getS();
+    // const reactString = ReactDOM.renderToString(
+    //     React.createElement(Home.default || '')
+    // );
+
+    const reactString = await getS();
     console.log('### reactString', reactString);
     console.log('ctx.path.?? ', ctx.path, assetArr, entryJs, reactJs);
     await ctx.render('entry', {

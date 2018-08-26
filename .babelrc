@@ -1,0 +1,15 @@
+{
+  "presets": [
+    "env",
+    "react"
+  ],
+  "plugins": [
+    "transform-decorators-legacy",
+    "transform-runtime"
+  ],
+  "env": {
+    "local": {
+      "plugins": ["ignore-html-and-css-imports"]
+    }
+  }
+}

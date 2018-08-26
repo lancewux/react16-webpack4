@@ -16,7 +16,7 @@ module.exports = {
   context: path.resolve(__dirname, '../'),
   // devtool: 'source-map',
   entry: {
-    server: './src/server/index'
+    server: './src/server/index2'
   },
   output: {
     path: outputPath,
